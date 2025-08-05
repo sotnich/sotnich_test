@@ -18,7 +18,7 @@ jobs:
       - name: Test
         run: git rev-parse --short HEAD
 
-      - name: Test
+      - name: Test full_refresh_models.txt
         run: cat full_refresh_models.txt
 
       - name: Run cleanup for full_refresh_models
