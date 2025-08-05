@@ -15,3 +15,14 @@ jobs:
       - name: Test
         run: git rev-parse --abbrev-ref HEAD
 
+      - name: Test
+        run: cat full_refresh_models.txt
+
+      - name: Run cleanup for full_refresh_models
+        run: truncate -s 0 tiko-dw/full_refresh_models.txt
+
+      - name: Commit and push changes to full_refresh_models.txt and manifest.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: 'full_refresh_models.txt'
+          commit_message: "Manifest update."
