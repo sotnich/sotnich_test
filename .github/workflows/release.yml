@@ -34,6 +34,9 @@ jobs:
       - name: Run cleanup for full_refresh_models
         run: truncate -s 0 full_refresh_models.txt
 
+      - name: Create manifest
+        run: echo $(git rev-parse --short HEAD) > manifest.json
+
       - name: Why not fail
         run: |
           rand=$((RANDOM % 100));
@@ -45,5 +48,5 @@ jobs:
       - name: Commit and push changes to full_refresh_models.txt and manifest.json
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: 'full_refresh_models.txt'
+          file_pattern: 'manifest.json full_refresh_models.txt'
           commit_message: "Manifest update."
