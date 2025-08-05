@@ -1,0 +1,17 @@
+name: DBT prod release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  dbt-build-changed-models:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Test
+        run: git rev-parse --abbrev-ref HEAD
+
