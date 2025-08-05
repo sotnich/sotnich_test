@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Test
-        run: git rev-parse --abbrev-ref HEAD
+        run: git rev-parse --short HEAD
 
       - name: Test
         run: cat full_refresh_models.txt
@@ -26,6 +26,14 @@ jobs:
 
       - name: Test
         run: cat full_refresh_models.txt
+
+      - name: Why not fail
+        run: |
+          rand=$((RANDOM % 100));
+          echo "Random number: $rand"
+          if [ $rand -ge 30 ]; then
+            exit 1
+          fi
 
       - name: Commit and push changes to full_refresh_models.txt and manifest.json
         uses: stefanzweifel/git-auto-commit-action@v5
