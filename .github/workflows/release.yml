@@ -17,17 +17,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Test
-        run: git rev-parse --short HEAD
-
       - name: Test full_refresh_models.txt
         run: cat full_refresh_models.txt
 
-      - name: Run cleanup for full_refresh_models
-        run: truncate -s 0 full_refresh_models.txt
+      - name: Test
+        run: git rev-parse --short HEAD
+
+      - name: Fetch and rebase latest main
+        run: |
+          git fetch origin main
+          git rebase origin/main
 
       - name: Test
-        run: cat full_refresh_models.txt
+        run: git rev-parse --short HEAD
+
+      - name: Run cleanup for full_refresh_models
+        run: truncate -s 0 full_refresh_models.txt
 
       - name: Why not fail
         run: |
@@ -36,11 +41,6 @@ jobs:
           if [ $rand -ge 50 ]; then
             exit 1
           fi
-
-      - name: Fetch and rebase latest main
-        run: |
-          git fetch origin main
-          git rebase origin/main
 
       - name: Commit and push changes to full_refresh_models.txt and manifest.json
         uses: stefanzweifel/git-auto-commit-action@v5
